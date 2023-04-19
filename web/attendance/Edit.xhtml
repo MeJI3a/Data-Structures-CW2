@@ -1,0 +1,51 @@
+<?xml version="1.0" encoding="UTF-8" ?>
+<!DOCTYPE html PUBLIC "-//W3C//DTD XHTML 1.0 Transitional//EN" "http://www.w3.org/TR/xhtml1/DTD/xhtml1-transitional.dtd">
+<html xmlns="http://www.w3.org/1999/xhtml"
+      xmlns:ui="http://xmlns.jcp.org/jsf/facelets"
+      xmlns:h="http://xmlns.jcp.org/jsf/html"
+      xmlns:f="http://xmlns.jcp.org/jsf/core">
+
+    <ui:composition template="/template.xhtml">
+        <ui:define name="title">
+            <h:outputText value="#{bundle.EditAttendanceTitle}"></h:outputText>
+        </ui:define>
+        <ui:define name="body">
+            <h:panelGroup id="messagePanel" layout="block">
+                <h:messages errorStyle="color: red" infoStyle="color: green" layout="table"/>
+            </h:panelGroup>
+            <h:form>
+                <h:panelGrid columns="2">
+                    <h:outputLabel value="#{bundle.EditAttendanceLabel_id}" for="id" />
+                    <h:inputText id="id" value="#{attendanceController.selected.id}" title="#{bundle.EditAttendanceTitle_id}" required="true" requiredMessage="#{bundle.EditAttendanceRequiredMessage_id}"/>
+                    <h:outputLabel value="#{bundle.EditAttendanceLabel_attendanceDate}" for="attendanceDate" />
+                    <h:inputText id="attendanceDate" value="#{attendanceController.selected.attendanceDate}" title="#{bundle.EditAttendanceTitle_attendanceDate}" >
+                        <f:convertDateTime pattern="MM/dd/yyyy" />
+                    </h:inputText>
+                    <h:outputLabel value="#{bundle.EditAttendanceLabel_courseId}" for="courseId" />
+                    <h:selectOneMenu id="courseId" value="#{attendanceController.selected.courseId}" title="#{bundle.EditAttendanceTitle_courseId}" required="true" requiredMessage="#{bundle.EditAttendanceRequiredMessage_courseId}">
+                        <f:selectItems value="#{courseController.itemsAvailableSelectOne}"/>
+                    </h:selectOneMenu>
+                    <h:outputLabel value="#{bundle.EditAttendanceLabel_studentId}" for="studentId" />
+                    <h:selectOneMenu id="studentId" value="#{attendanceController.selected.studentId}" title="#{bundle.EditAttendanceTitle_studentId}" required="true" requiredMessage="#{bundle.EditAttendanceRequiredMessage_studentId}">
+                        <f:selectItems value="#{studentController.itemsAvailableSelectOne}"/>
+                    </h:selectOneMenu>
+                    <h:outputLabel value="#{bundle.CreateAttendanceLabel_studentAttendance}" for="studentAttendance" />
+                    <h:selectOneRadio id="studentAttendance" value="#{attendanceController.selected.studentAttendance}" required="true" requiredMessage="#{bundle.CreateAttendanceRequiredMessage_studentAttendance}">
+                        <f:selectItem itemValue="Y" itemLabel="Present" />
+                        <f:selectItem itemValue="N" itemLabel="Absent" />
+                    </h:selectOneRadio>
+                </h:panelGrid>
+                <h:commandLink action="#{attendanceController.update}" value="#{bundle.EditAttendanceSaveLink}"/>
+                <br />
+                <br />
+                <h:link outcome="View" value="#{bundle.EditAttendanceViewLink}"/>
+                <br />
+                <h:commandLink action="#{attendanceController.prepareList}" value="#{bundle.EditAttendanceShowAllLink}" immediate="true"/>
+                <br />
+                <br />
+                <h:link outcome="/index" value="#{bundle.EditAttendanceIndexLink}" />
+            </h:form>
+        </ui:define>
+    </ui:composition>
+
+</html>
